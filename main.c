@@ -1,5 +1,9 @@
 #include <stdio.h>
 
+//允许移动光标
+#include <editline/readline.h>
+#include <editline/history.h>
+
 /* Declare a buffer for user input of size 2048 */
 static char input[2048];
 
@@ -13,13 +17,16 @@ int main(int argc, char** argv) {
   while (1) {
 
     /* Output our prompt */
-    fputs("lispy> ", stdout);
+    char* input = readline("lispy> ");
+    
+    /* Add input to history */
+    add_history(input);
 
-    /* Read a line of user input of maximum size 2048 */
-    fgets(input, 2048, stdin);
+    /* * Echo input back to user */ 
+     printf("No you're a %s\n", input);
 
-    /* Echo input back to user */
-    printf("No you're a %s", input);
+    /* Free retrieved input */
+    free(input);
   }
 
   return 0;
